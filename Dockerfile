@@ -2,13 +2,13 @@
 
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+EXPOSE 8080
+ENV ASPNETCORE_URLS=http://*:8080
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["WebApplication1/WebApplication1.csproj", "WebApplication1/"]
-RUN dotnet restore "WebApplication1/WebApplication1.csproj"
+COPY ["WebApplication1/WebApplication1.csproj", "./"]
+RUN dotnet restore "WebApplication1.csproj"
 COPY . .
 WORKDIR "/src/WebApplication1"
 RUN dotnet build "WebApplication1.csproj" -c Release -o /app/build
